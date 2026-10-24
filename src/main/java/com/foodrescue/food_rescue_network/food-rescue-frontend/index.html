@@ -1,0 +1,202 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#247341">
+  <title>Dashboard | Food Rescue Network</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body class="dashboard-page">
+  <nav class="navbar">
+    <a class="brand" href="#home">
+      <span class="brand-icon">♻</span>
+      Food Rescue Network
+    </a>
+
+    <div class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#donations">Find Food</a>
+      <a href="#donate" data-role="provider">Donate Food</a>
+      <a href="#request" data-role="requester">Request Pickup</a>
+      <a href="#pickups" data-role="pickup-manager">Manage Pickups</a>
+    </div>
+
+    <div class="nav-user">
+      <span id="welcomeUser">Welcome!</span>
+      <button id="logoutBtn" class="btn btn-outline" type="button">Logout</button>
+    </div>
+  </nav>
+
+  <main>
+    <section class="dashboard-hero" id="home">
+      <div class="hero-content">
+        <span class="eyebrow">LESS WASTE, MORE CARE</span>
+        <h1>Share food.<br>Spread kindness.</h1>
+        <p>Connect surplus meals with people who need them. Together, we can build a more caring community.</p>
+        <div class="hero-actions">
+          <a class="btn btn-light" href="#donations">Find Available Food</a>
+          <a class="btn btn-ghost" href="#donate" data-role="provider">Share a Donation</a>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="food-circle">🥗</div>
+        <span class="floating-note">Good food, shared well ♡</span>
+      </div>
+    </section>
+
+    <section class="impact-strip">
+      <div>
+        <span class="impact-icon">♻</span>
+        <strong>Reduce food waste</strong>
+        <p>Give surplus food another purpose.</p>
+      </div>
+      <div>
+        <span class="impact-icon">♥</span>
+        <strong>Support communities</strong>
+        <p>Connect food with people in need.</p>
+      </div>
+      <div>
+        <span class="impact-icon">🤝</span>
+        <strong>Work together</strong>
+        <p>Providers, NGOs, and volunteers united.</p>
+      </div>
+    </section>
+
+    <section class="section" id="donations">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">DISCOVER DONATIONS</span>
+          <h2>Available food</h2>
+          <p>Explore donations currently available for collection.</p>
+        </div>
+        <button id="refreshDonationsBtn" class="btn btn-outline" type="button">
+          ↻ Refresh
+        </button>
+      </div>
+
+      <p id="donationMessage" class="message" role="status" aria-live="polite"></p>
+      <div id="donationGrid" class="donation-grid">
+        <p class="loading-text">Loading available donations...</p>
+      </div>
+    </section>
+
+    <section class="section form-section" id="donate" data-role-section="provider">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">SHARE YOUR SURPLUS</span>
+          <h2>Publish a food donation</h2>
+          <p>Tell the community what food is available and when it can be collected.</p>
+        </div>
+      </div>
+
+      <form id="donationForm" class="form-card">
+        <div class="form-grid">
+          <div>
+            <label for="foodName">Food name</label>
+            <input id="foodName" type="text" maxlength="150"
+                   placeholder="e.g. Vegetable rice" required>
+          </div>
+
+          <div>
+            <label for="foodCategory">Food category</label>
+            <select id="foodCategory" required>
+              <option value="">Select category</option>
+              <option value="VEGETARIAN">Vegetarian</option>
+              <option value="NON_VEGETARIAN">Non-vegetarian</option>
+              <option value="BAKERY">Bakery</option>
+              <option value="FRUITS">Fruits</option>
+              <option value="PACKAGED">Packaged food</option>
+              <option value="OTHER">Other</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="quantity">Quantity</label>
+            <input id="quantity" type="number" min="1" step="1"
+                   placeholder="e.g. 25" required>
+            <span class="field-hint">Enter a positive whole number.</span>
+          </div>
+
+          <div>
+            <label for="pickupLocation">Pickup location</label>
+            <input id="pickupLocation" type="text" maxlength="255"
+                   placeholder="Street, area or landmark" required>
+          </div>
+
+          <div>
+            <label for="availableFrom">Available from</label>
+            <input id="availableFrom" type="datetime-local" required>
+          </div>
+
+          <div>
+            <label for="pickupDeadline">Pickup deadline</label>
+            <input id="pickupDeadline" type="datetime-local" required>
+          </div>
+        </div>
+
+        <p id="publishMessage" class="message" role="status" aria-live="polite"></p>
+        <button class="btn btn-primary" type="submit">Publish Donation</button>
+      </form>
+    </section>
+
+    <section class="section form-section" id="request" data-role-section="requester">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">COLLECT FOOD</span>
+          <h2>Request a pickup</h2>
+          <p>Select a donation above, then enter the quantity you need.</p>
+        </div>
+      </div>
+
+      <form id="pickupForm" class="form-card">
+        <div class="form-grid">
+          <div>
+            <label for="pickupDonationId">Donation ID</label>
+            <input id="pickupDonationId" type="number" min="1"
+                   placeholder="Select from available food" required>
+          </div>
+          <div>
+            <label for="requestedQuantity">Requested quantity</label>
+            <input id="requestedQuantity" type="number" min="1" step="1"
+                   placeholder="Enter quantity" required>
+          </div>
+        </div>
+
+        <p id="pickupCreateMessage" class="message" role="status" aria-live="polite"></p>
+        <button class="btn btn-primary" type="submit">Submit Pickup Request</button>
+      </form>
+    </section>
+
+    <section class="section" id="pickups" data-role-section="pickup-manager">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">COLLECTION COORDINATION</span>
+          <h2>Pickup requests</h2>
+          <p>Review requests and update their status where permitted.</p>
+        </div>
+        <button id="refreshPickupsBtn" class="btn btn-outline" type="button">
+          ↻ Refresh
+        </button>
+      </div>
+
+      <p id="pickupMessage" class="message" role="status" aria-live="polite"></p>
+      <div id="pickupList" class="pickup-list">
+        <p class="loading-text">Loading pickup requests...</p>
+      </div>
+    </section>
+
+    <section class="closing-banner">
+      <h2>Every rescued meal makes a difference.</h2>
+      <p>Thank you for helping build a community where good food reaches the people who need it.</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <a class="brand" href="#home">♻ Food Rescue Network</a>
+    <p>Rescue food. Reduce waste. Share hope.</p>
+  </footer>
+</body>
+</html>
